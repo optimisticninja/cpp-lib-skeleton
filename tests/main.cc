@@ -11,5 +11,5 @@ int main(int argc, char** argv)
 
 TEST(ImplementMe, OrFearYourCode)
 {
-    ASSERT_EQ(true, true);
+    ASSERT_EQ(false, true);
 }
