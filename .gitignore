@@ -1,0 +1,6 @@
+bin/
+lib/
+obj/
+*.kdev4
+.kdev4
+
