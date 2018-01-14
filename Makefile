@@ -13,11 +13,11 @@ tests: $(TESTBINARY)
 	./$<
 
 $(LIBRARY): $(OBJECTS)
-	@mkdir -p $(LIBDIR)
+	@mkdir -p $(@D)
 	$(CXX) $^ -shared $(LIBS) -o $@
 
 $(OBJECTS): $(OBJDIR)%.o: $(SRCDIR)%.cc
-	@mkdir -p $(OBJDIR)
+	@mkdir -p $(@D)
 	$(CXX) $< -c -o $@
 
 $(TESTBINARY): $(OBJECTS) $(TESTOBJECTS)
@@ -28,11 +28,14 @@ $(TESTOBJECTS): $(TESTOBJDIR)%.o: $(TESTSRCDIR)%.cc
 	@mkdir -p $(@D)
 	$(CXX) $< -c -o $@
 
-run:
-	./$(BINARY)
+run: $(TESTBINARY)
+	./$<
+
+run-valgrind: $(TESTBINARY)
+	valgrind --leak-check=full ./$<
 
 clean:
-	rm -rf $(BINDIR) $(OBJDIR)
+	rm -rf $(BINDIR) $(OBJDIR) $(LIBDIR)
 
 # Use for debugging makefile variables
 #   $ make print-SOME_VAR
